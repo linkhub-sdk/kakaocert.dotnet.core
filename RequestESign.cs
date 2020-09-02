@@ -18,7 +18,7 @@ namespace Kakaocert
         [DataMember] public String TMSTitle;
         [DataMember] public String Token;
         [DataMember] public bool? isAllowSimpleRegistYN;
-        [DataMember]
-        public bool? isVerifyNameYN;
+        [DataMember] public bool? isVerifyNameYN;
+        [DataMember] public bool? isAppUseYN;
     }
 }
