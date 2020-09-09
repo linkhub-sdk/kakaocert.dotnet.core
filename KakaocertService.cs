@@ -293,35 +293,59 @@ namespace Kakaocert
             return response;
         }
 
-        public ResultCMS GetCMSResult(String ClientCode, String ReceiptId)
+        public ResultCMS getCMSState(String ClientCode, String ReceiptId)
         {
             if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-            return httpget<ResultCMS>("/SignDirectDebit/" + ReceiptId, ClientCode, null);
+            return httpget<ResultCMS>("/SignDirectDebit/Status/" + ReceiptId, ClientCode, null);
         }
 
-        public ResultVerifyAuth GetVerifyAuthResult(String ClientCode, String ReceiptId)
+        public ResultVerifyAuth getVerifyAuthState(String ClientCode, String ReceiptId)
         {
             if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-            return httpget<ResultVerifyAuth>("/SignIdentity/" + ReceiptId, ClientCode, null);
+            return httpget<ResultVerifyAuth>("/SignIdentity/Status/" + ReceiptId, ClientCode, null);
         }
 
-        public ResultESign GetESignResult(String ClientCode, String ReceiptId, String Signature = null)
+        public ResultESign getESignState(String ClientCode, String ReceiptId)
+        {
+            if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+                        
+            return httpget<ResultESign>("/SignToken/Status/" + ReceiptId, ClientCode, null);
+        }
+
+        public ResponseVerify verfiyCMS(String ClientCode, String ReceiptId)
         {
             if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-            string uri = "/SignToken/" + ReceiptId;
+            return httpget<ResponseVerify>("/SignDirectDebit/Verify/" + ReceiptId, ClientCode, null);
+        }
 
-            if(false == String.IsNullOrEmpty(Signature))
+        public ResponseVerify verifyAuth(String ClientCode, String ReceiptId)
+        {
+            if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+
+            return httpget<ResponseVerify>("/SignIdentity/Verify/" + ReceiptId, ClientCode, null);
+        }
+
+        public ResponseVerify verifyESign(String ClientCode, String ReceiptId, String Signature = null)
+        {
+            if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
+            if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
+
+            string uri = "/SignToken/Verify/" + ReceiptId;
+
+            if (false == String.IsNullOrEmpty(Signature))
             {
                 uri += "/" + Signature;
             }
 
-            return httpget<ResultESign>(uri, ClientCode, null);
+            return httpget<ResponseVerify>(uri, ClientCode, null);
         }
 
 

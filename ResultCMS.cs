@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Kakaocert
@@ -12,7 +11,6 @@ namespace Kakaocert
         [DataMember] public int? state;
         [DataMember] public int? expires_in;
         [DataMember] public String callCenterNum;
-        [DataMember] public String token;
         [DataMember] public bool? allowSimpleRegistYN;
 
         [DataMember] public bool? verifyNameYN;
@@ -23,7 +21,6 @@ namespace Kakaocert
         [DataMember] public String clientName;
         [DataMember] public String tmstitle;
         [DataMember] public String tmsmessage;
-        [DataMember] public String signedData;
         [DataMember] public String subClientName;
         [DataMember] public String subClientCode;
         [DataMember] public String viewDT;

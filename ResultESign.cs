@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Kakaocert
@@ -19,8 +18,6 @@ namespace Kakaocert
         [DataMember]
         public String callCenterNum;
         [DataMember]
-        public String token;
-        [DataMember]
         public bool? allowSimpleRegistYN;
 
         [DataMember]
@@ -39,8 +36,6 @@ namespace Kakaocert
         public String tmstitle;
         [DataMember]
         public String tmsmessage;
-        [DataMember]
-        public String signedData;
         [DataMember]
         public String subClientName;
         [DataMember]

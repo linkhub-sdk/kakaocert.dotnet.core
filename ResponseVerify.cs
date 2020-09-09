@@ -4,11 +4,12 @@ using System.Runtime.Serialization;
 namespace Kakaocert
 {
     [DataContract]
-    public class Response
+    public class ResponseVerify
     {
         [DataMember]
-        public long code;
+        public String receiptId;
         [DataMember]
-        public String message;
+        public String signedData;
     }
+
 }
