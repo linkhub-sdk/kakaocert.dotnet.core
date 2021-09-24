@@ -15,13 +15,17 @@ namespace Kakaocert
     public class KakaocertService
     {
         private const string ServiceID = "KAKAOCERT";
-        private const String ServiceURL = "https://kakaocert-api.linkhub.co.kr";
+        private const String ServiceURL_Default = "https://kakaocert-api.linkhub.co.kr";
+        private const String ServiceURL_Static = "https://static-kakaocert-api.linkhub.co.kr";
+        private const String ServiceURL_GA = "https://ga-kakaocert-api.linkhub.co.kr";
 
-        private const String APIVersion = "1.0";
+        private const String APIVersion = "2.0";
         private const String CRLF = "\r\n";
 
         private Dictionary<String, Token> _tokenTable = new Dictionary<String, Token>();
         private bool _IPRestrictOnOff;
+        private bool _UseStaticIP;
+        private bool _UseGAIP;
         private String _LinkID;
         private String _SecretKey;
         private Authority _LinkhubAuth;
@@ -32,6 +36,18 @@ namespace Kakaocert
         {
             set { _IPRestrictOnOff = value; }
             get { return _IPRestrictOnOff; }
+        }
+
+        public bool UseStaticIP
+        {
+            set { _UseStaticIP = value; }
+            get { return _UseStaticIP; }
+        }
+
+        public bool UseGAIP
+        {
+            set { _UseGAIP = value; }
+            get { return _UseGAIP; }
         }
 
         public KakaocertService(String LinkID, String SecretKey)
@@ -62,6 +78,26 @@ namespace Kakaocert
             return (T)ser.ReadObject(jsonStream);
         }
 
+        protected string ServiceURL
+        {
+            get
+            {
+                if (UseGAIP)
+                {
+                    return ServiceURL_GA;
+                }
+                else if (UseStaticIP)
+                {
+                    return ServiceURL_Static;
+                }
+                else
+                {
+                    return ServiceURL_Default;
+                }
+
+            }
+        }
+
         private String getSession_Token(String CorpNum)
         {
             Token _token = null;
@@ -74,7 +110,7 @@ namespace Kakaocert
             bool expired = true;
             if (_token != null)
             {
-                DateTime now = DateTime.Parse(_LinkhubAuth.getTime());
+                DateTime now = DateTime.Parse(_LinkhubAuth.getTime(UseStaticIP, false, UseGAIP));
 
                 DateTime expiration = DateTime.Parse(_token.expiration);
 
@@ -88,11 +124,11 @@ namespace Kakaocert
                 {
                     if (_IPRestrictOnOff) // IPRestrictOnOff 사용시
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes);
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, null, UseStaticIP, false, UseGAIP);
                     }
                     else
                     {
-                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*");
+                        _token = _LinkhubAuth.getToken(ServiceID, CorpNum, _Scopes, "*", UseStaticIP, false, UseGAIP);
                     }
 
 
@@ -203,7 +239,7 @@ namespace Kakaocert
 
             request.Method = "POST";
 
-            String xDate = _LinkhubAuth.getTime();
+            String xDate = _LinkhubAuth.getTime(UseStaticIP, false, UseGAIP);
 
             request.Headers.Add("x-lh-date", xDate);
 
@@ -212,16 +248,14 @@ namespace Kakaocert
             byte[] btPostDAta = Encoding.UTF8.GetBytes(PostData);
 
             String HMAC_target = "POST\n";
-            HMAC_target += Convert.ToBase64String(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))) + "\n";
+            HMAC_target += Convert.ToBase64String(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(PostData))) + "\n";
             HMAC_target += xDate + "\n";
             HMAC_target += APIVersion + "\n";
-            HMACSHA1 hmac = new HMACSHA1(Convert.FromBase64String(_SecretKey));
+            HMACSHA256 hmac = new HMACSHA256(Convert.FromBase64String(_SecretKey));
 
             String hmac_str = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(HMAC_target)));
 
             request.Headers.Add("x-kc-auth", _LinkID + " " + hmac_str);
-
-
 
             request.ContentLength = btPostDAta.Length;
 

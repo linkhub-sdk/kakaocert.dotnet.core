@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <Authors>Linkhub</Authors>
     <Company>Linkhub</Company>
     <Description>Kakaocert SDK for dotnetcore</Description>
-    <Version>2.0.1</Version>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Linkhub" Version="1.0.4" />
+    <PackageReference Include="Linkhub" Version="1.5.0" />
   </ItemGroup>
 
 </Project>
