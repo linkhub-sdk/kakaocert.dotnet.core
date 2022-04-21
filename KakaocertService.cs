@@ -26,7 +26,7 @@ namespace Kakaocert
         private bool _IPRestrictOnOff;
         private bool _UseStaticIP;
         private bool _UseGAIP;
-        private bool _UseLocalTimeYN;
+        private bool _UseLocalTimeYN = true;
         private String _LinkID;
         private String _SecretKey;
         private Authority _LinkhubAuth;
