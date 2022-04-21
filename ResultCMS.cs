@@ -26,6 +26,7 @@ namespace Kakaocert
         [DataMember] public String viewDT;
         [DataMember] public String completeDT;
         [DataMember] public String verifyDT;
+        [DataMember] public bool? appUseYN;
 
     }
 }

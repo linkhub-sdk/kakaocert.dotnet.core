@@ -30,6 +30,8 @@ namespace Kakaocert
         public bool? isAllowSimpleRegistYN;
         [DataMember]
         public bool? isVerifyNameYN;
+        [DataMember]
+        public bool? isAppUseYN;
 
 
         [DataMember]
