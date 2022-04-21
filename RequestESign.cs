@@ -7,6 +7,7 @@ namespace Kakaocert
     public class RequestESign
     {
         [DataMember] public String CallCenterNum;
+        [DataMember] public String CallCenterName;
         [DataMember] public int? Expires_in;
         [DataMember] public String PayLoad;
         [DataMember] public String ReceiverBirthDay;

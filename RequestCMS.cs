@@ -9,6 +9,8 @@ namespace Kakaocert
         [DataMember]
         public String CallCenterNum;
         [DataMember]
+        public String CallCenterName;
+        [DataMember]
         public int? Expires_in;
         [DataMember]
         public String PayLoad;

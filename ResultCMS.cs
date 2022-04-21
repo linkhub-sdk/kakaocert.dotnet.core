@@ -11,6 +11,7 @@ namespace Kakaocert
         [DataMember] public int? state;
         [DataMember] public int? expires_in;
         [DataMember] public String callCenterNum;
+        [DataMember] public String callCenterName;
         [DataMember] public bool? allowSimpleRegistYN;
 
         [DataMember] public bool? verifyNameYN;

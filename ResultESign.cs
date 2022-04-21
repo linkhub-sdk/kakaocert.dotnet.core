@@ -18,6 +18,8 @@ namespace Kakaocert
         [DataMember]
         public String callCenterNum;
         [DataMember]
+        public String callCenterName;
+        [DataMember]
         public bool? allowSimpleRegistYN;
 
         [DataMember]
