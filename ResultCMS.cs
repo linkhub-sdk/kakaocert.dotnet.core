@@ -28,6 +28,7 @@ namespace Kakaocert
         [DataMember] public String completeDT;
         [DataMember] public String verifyDT;
         [DataMember] public bool? appUseYN;
+        [DataMember] public String tx_id;
 
     }
 }
