@@ -5,7 +5,7 @@
     <Authors>Linkhub</Authors>
     <Company>Linkhub</Company>
     <Description>Kakaocert SDK for dotnetcore</Description>
-    <Version>2.52.0</Version>
+    <Version>2.53.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

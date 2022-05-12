@@ -359,12 +359,19 @@ namespace Kakaocert
             return httpget<ResultESign>("/SignToken/Status/" + ReceiptId, ClientCode, null);
         }
 
-        public ResponseVerify verifyCMS(String ClientCode, String ReceiptId)
+        public ResponseVerify verifyCMS(String ClientCode, String ReceiptId, String Signature = null)
         {
             if (String.IsNullOrEmpty(ClientCode)) throw new KakaocertException(-99999999, "이용기관코드가 입력되지 않았습니다.");
             if (String.IsNullOrEmpty(ReceiptId)) throw new KakaocertException(-99999999, "접수아이디가 입력되지 않았습니다.");
 
-            return httpget<ResponseVerify>("/SignDirectDebit/Verify/" + ReceiptId, ClientCode, null);
+            string uri = "/SignDirectDebit/Verify/" + ReceiptId;
+
+            if (false == String.IsNullOrEmpty(Signature))
+            {
+                uri += "/" + Signature;
+            }
+
+            return httpget<ResponseVerify>(uri, ClientCode, null);
         }
 
         public ResponseVerify verifyAuth(String ClientCode, String ReceiptId)
